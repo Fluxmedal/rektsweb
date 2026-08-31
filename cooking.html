@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Something's Cooking</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #f5f5f5;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .pan-wrapper {
+      position: relative;
+      width: 180px;
+      height: 160px;
+      margin: 0 auto 2rem;
+    }
+
+    /* Flames */
+    .flames {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 50px;
+      z-index: 1;
+    }
+
+    .flame {
+      position: absolute;
+      bottom: 0;
+      border-radius: 50% 50% 20% 20%;
+      animation: flicker 0.6s ease-in-out infinite alternate;
+    }
+
+    .flame:nth-child(1) {
+      left: 10px;
+      width: 22px;
+      height: 38px;
+      background: linear-gradient(to top, #ff4500, #ff8c00, #ffd700);
+      animation-delay: 0s;
+    }
+
+    .flame:nth-child(2) {
+      left: 28px;
+      width: 28px;
+      height: 48px;
+      background: linear-gradient(to top, #ff3300, #ff7700, #ffcc00);
+      animation-delay: 0.15s;
+    }
+
+    .flame:nth-child(3) {
+      left: 50px;
+      width: 24px;
+      height: 42px;
+      background: linear-gradient(to top, #ff4500, #ff8c00, #ffd700);
+      animation-delay: 0.3s;
+    }
+
+    .flame:nth-child(4) {
+      left: 5px;
+      width: 16px;
+      height: 28px;
+      background: linear-gradient(to top, #ff6600, #ffaa00);
+      animation-delay: 0.45s;
+      opacity: 0.85;
+    }
+
+    .flame:nth-child(5) {
+      left: 65px;
+      width: 18px;
+      height: 32px;
+      background: linear-gradient(to top, #ff5500, #ff9900);
+      animation-delay: 0.1s;
+      opacity: 0.9;
+    }
+
+    @keyframes flicker {
+      0%   { transform: scaleY(1) scaleX(1) translateY(0); opacity: 1; }
+      100% { transform: scaleY(1.15) scaleX(0.92) translateY(-3px); opacity: 0.85; }
+    }
+
+    /* Frying pan SVG */
+    .pan {
+      position: relative;
+      z-index: 2;
+      width: 160px;
+      height: 100px;
+      margin: 0 auto;
+    }
+
+    .pan svg {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+    }
+
+    /* Little steam / smoke puffs */
+    .steam {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 40px;
+      pointer-events: none;
+    }
+
+    .puff {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 50%;
+      animation: rise 2.2s ease-out infinite;
+    }
+
+    .puff:nth-child(1) { left: 20px; animation-delay: 0s; }
+    .puff:nth-child(2) { left: 35px; animation-delay: 0.6s; width: 10px; height: 10px; }
+    .puff:nth-child(3) { left: 48px; animation-delay: 1.1s; }
+
+    @keyframes rise {
+      0%   { transform: translateY(0) scale(1); opacity: 0.4; }
+      100% { transform: translateY(-35px) scale(1.6); opacity: 0; }
+    }
+
+    h1 {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.6rem;
+      background: linear-gradient(90deg, #ffd700, #ff8c00, #ff4500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p {
+      font-size: 1.1rem;
+      opacity: 0.75;
+      max-width: 320px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .dots {
+      display: inline-block;
+      animation: blink 1.4s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="pan-wrapper">
+      <!-- Steam -->
+      <div class="steam">
+        <div class="puff"></div>
+        <div class="puff"></div>
+        <div class="puff"></div>
+      </div>
+
+      <!-- Frying pan -->
+      <div class="pan">
+        <svg viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+          <!-- Handle -->
+          <path d="M118 42 Q145 38 152 48 Q155 55 148 58 Q135 62 120 55"
+                fill="#4a4a4a" stroke="#2a2a2a" stroke-width="2"/>
+          <rect x="115" y="45" width="8" height="14" rx="2" fill="#3a3a3a"/>
+
+          <!-- Pan body -->
+          <ellipse cx="70" cy="58" rx="55" ry="22" fill="#3d3d3d" stroke="#222" stroke-width="2.5"/>
+          <ellipse cx="70" cy="52" rx="50" ry="18" fill="#5a5a5a"/>
+          
+          <!-- Inner cooking surface -->
+          <ellipse cx="70" cy="50" rx="42" ry="14" fill="#2c2c2c"/>
+
+          <!-- Little egg yolk for fun -->
+          <circle cx="62" cy="48" r="9" fill="#f5c518" opacity="0.9"/>
+          <circle cx="60" cy="46" r="3.5" fill="#fff8dc" opacity="0.6"/>
+
+          <!-- Tiny bacon strip -->
+          <path d="M78 45 Q85 42 90 46 Q88 52 80 50 Q75 48 78 45"
+                fill="#e85d4c" opacity="0.85"/>
+        </svg>
+      </div>
+
+      <!-- Flames under the pan -->
+      <div class="flames">
+        <div class="flame"></div>
+        <div class="flame"></div>
+        <div class="flame"></div>
+        <div class="flame"></div>
+        <div class="flame"></div>
+      </div>
+    </div>
+
+    <h1>Something's cooking<span class="dots">...</span></h1>
+    <p>We're working on something tasty.<br>Check back soon!</p>
+  </div>
+</body>
+</html>
